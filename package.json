@@ -1,0 +1,24 @@
+{
+  "name": "project_1_todo_agenda",
+  "version": "0.0.1",
+  "description": "This is TODO Agenda which works on console",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "todo_agenda"
+  },
+  "keywords": [
+    "todo",
+    "console",
+    "agenda",
+    "node"
+  ],
+  "author": "Christian AM",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
+}

@@ -19,6 +19,7 @@
   "author": "Christian AM",
   "license": "ISC",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "inquirer": "^8.0.0"
   }
 }

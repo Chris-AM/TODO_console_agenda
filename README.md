@@ -7,4 +7,5 @@ run npm i to download all dependencies
 
 ## Dependencies
 colors,
-inquirer
+inquirer,
+uuid

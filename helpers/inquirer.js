@@ -45,7 +45,7 @@ const questions = [
 
         ]
     }
-    
+
 ];
 
 const pause = [
@@ -55,6 +55,9 @@ const pause = [
         message: `press ${'ENTER'.green} to continue`
     }
 ];
+
+
+
 const inquirerMenu = async () => {
 
     console.clear();
@@ -76,7 +79,42 @@ const inquirerPause = async () => {
 
 }
 
+////////////////////////////////////////////////////////
+//
+// I need a method to  store my task and then print it
+//
+///////////////////////////////////////////////////////
+
+const inquirerReadInput = async (message) => {
+
+    const question = [
+        {
+            type: 'input',
+            name: 'description',
+            message,
+            ///////////////////////////////////////////
+            //
+            // I'm forcing the user to put an input
+            //
+            //////////////////////////////////////////
+            validate(value) {
+                if (value.length !== 0) {
+                    return true;
+                }
+                return `${'ERROR'.red.bold}, ${'you must put an input'.red}`;
+
+            }
+        }
+    ];
+
+    const { description } = await inquirer.prompt(question);
+    return description;
+
+
+}
+
 module.exports = {
     inquirerMenu,
-    inquirerPause
+    inquirerPause,
+    inquirerReadInput
 }

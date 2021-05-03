@@ -2,6 +2,7 @@ const colors = require('colors');
 const { inquirerMenu, 
         inquirerPause,
         inquirerReadInput } = require('./helpers/inquirer'); 
+const { saveFile } = require('./helpers/saveFile');
 const Tasks = require('./models/tasks');
 
 console.clear();
@@ -23,12 +24,15 @@ const main = async () => {
             break
 
             case '2':
-                console.log(tasks._taskList);
+                console.log(tasks.arrayList);
         }
      
+        saveFile(tasks.arrayList);
+        
         await inquirerPause();
 
     } while (answer !== '0');
+
 
 }
 

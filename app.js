@@ -1,13 +1,16 @@
 const colors = require('colors');
-const { inquirerMenu,
-        inquirerPause,
-        inquirerReadInput } = require('./helpers/inquirer');
+const {
+    inquirerMenu,
+    inquirerPause,
+    inquirerReadInput,
+    inquirerDeleteList
+} = require('./helpers/inquirer');
 const { createFile, readFile } = require('./helpers/crudFile');
 const Tasks = require('./models/tasks');
 
 console.clear();
 
-const main = async () => {
+const main = async() => {
 
     let answer = ''
     const tasks = new Tasks();
@@ -24,22 +27,27 @@ const main = async () => {
             case '1':
                 const newTask = await inquirerReadInput('Description:');
                 tasks.createTask(newTask);
-            break
-            
+                break
+
             case '2':
-               
+
                 tasks.listTasks();
-            break;
+                break;
 
             case '3':
 
                 tasks.listFinished(true);
-            break;
+                break;
 
             case '4':
 
                 tasks.listFinished(false);
-            break;
+                break;
+
+            case '6':
+                const id = await inquirerDeleteList(tasks.arrayList);
+                console.log(id);
+                //tasks.deleteTaskById(id);
         }
 
         createFile(tasks.arrayList);

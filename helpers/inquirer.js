@@ -113,8 +113,38 @@ const inquirerReadInput = async (message) => {
 
 }
 
+const inquirerDeleteList = async (tasks = []) => {
+
+    const choices = tasks.map((task, i) => {
+        
+        const index =`${i+1}.`.green;
+
+        return {
+            value: task.id,
+            name: `${index} ${task.description}`
+        }
+    })
+
+    const menu = [
+        {
+            type: 'list',
+            name: 'id',
+            message: 'Delete',
+            choices
+        }
+    ];
+    
+    const { id } = await inquirer.prompt(menu);
+    return id;
+
+    
+
+
+}
+
 module.exports = {
     inquirerMenu,
     inquirerPause,
-    inquirerReadInput
+    inquirerReadInput,
+    inquirerDeleteList
 }

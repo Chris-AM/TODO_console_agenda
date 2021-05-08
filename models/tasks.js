@@ -19,6 +19,12 @@ class Tasks {
 
     }
 
+    deleteTaskById(id = '') {
+        if (this._taskList[id]) {
+            delete this._taskList;
+        }
+    }
+
     loadArrayList(tasks = []) {
         tasks.forEach(task => {
             this._taskList[task.id] = task;
@@ -41,7 +47,7 @@ class Tasks {
             const positionInList = `${i + 1}`.green;
             const description = task.description;
             const isFinished = task.completedIn;
-            const stateOfFinished = (isFinished) ? 'Finished'.green : 'Incompleted'.red;
+            const stateOfFinished = (isFinished) ? 'Completed'.green : 'Pending'.red;
             console.log(`${positionInList} ${description} :::: ${stateOfFinished}`);
 
         });
@@ -55,19 +61,19 @@ class Tasks {
         let index = 0;
         this.arrayList.forEach(task => {
 
-            const {description, completedIn} = task;
-            const STATE = (finished) ? 'Finished'.green : 'Pending'.red;
+            const { description, completedIn } = task;
+            const STATE = (finished) ? 'Completed'.green : 'Pending'.red;
 
             if (finished) {
-                
+
                 if (completedIn) {
                     index += 1;
-                    console.log(`${index.toString().green} ${description} :::: ${STATE}`);
+                    console.log(`${index.toString().green} ${description} :::: ${completedIn}`);
                 }
             } else {
-               
+
                 if (!completedIn) {
-                    
+
                     index += 1;
                     console.log(`${index.toString().green} ${description} :::: ${STATE}`);
                 }

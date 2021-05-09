@@ -8,13 +8,11 @@ require('colors');
 //
 //////////////////////////////////////////////////////////////////////
 
-const questions = [
-    {
+const questions = [{
         type: 'list', //shows a list
         name: 'option',
         message: 'what do you want to do?',
-        choices: [
-            {
+        choices: [{
                 value: '1',
                 name: `${'1.'.green} Create TODO List`
             },
@@ -48,17 +46,15 @@ const questions = [
 
 ];
 
-const pause = [
-    {
-        type: 'input',
-        name: 'pauseMenu',
-        message: `press ${'ENTER'.green} to continue`
-    }
-];
+const pause = [{
+    type: 'input',
+    name: 'pauseMenu',
+    message: `press ${'ENTER'.green} to continue`
+}];
 
 
 
-const inquirerMenu = async () => {
+const inquirerMenu = async() => {
 
     console.clear();
 
@@ -72,7 +68,7 @@ const inquirerMenu = async () => {
     return option;
 }
 
-const inquirerPause = async () => {
+const inquirerPause = async() => {
 
     console.log('\n');
     await inquirer.prompt(pause);
@@ -85,27 +81,25 @@ const inquirerPause = async () => {
 //
 ///////////////////////////////////////////////////////
 
-const inquirerReadInput = async (message) => {
+const inquirerReadInput = async(message) => {
 
-    const question = [
-        {
-            type: 'input',
-            name: 'description',
-            message,
-            ///////////////////////////////////////////
-            //
-            // I'm forcing the user to put an input
-            //
-            //////////////////////////////////////////
-            validate(value) {
-                if (value.length !== 0) {
-                    return true;
-                }
-                return `${'ERROR'.red.bold}, ${'you must put an input'.red}`;
-
+    const question = [{
+        type: 'input',
+        name: 'description',
+        message,
+        ///////////////////////////////////////////
+        //
+        // I'm forcing the user to put an input
+        //
+        //////////////////////////////////////////
+        validate(value) {
+            if (value.length !== 0) {
+                return true;
             }
+            return `${'ERROR'.red.bold}, ${'you must put an input'.red}`;
+
         }
-    ];
+    }];
 
     const { description } = await inquirer.prompt(question);
     return description;
@@ -113,11 +107,37 @@ const inquirerReadInput = async (message) => {
 
 }
 
-const inquirerDeleteList = async (tasks = []) => {
+const inquirerCheckToDo = async(tasks = []) => {
 
     const choices = tasks.map((task, i) => {
-        
-        const index =`${i+1}.`.green;
+
+        const index = `${i+1}.`.green;
+
+        return {
+            value: task.id,
+            name: `${index} ${task.description}`,
+            checked: (task.completedIn) ? true : false
+        }
+    })
+
+
+    const question = [{
+        type: 'checkbox',
+        name: 'ids',
+        message: 'Select your tasks',
+        choices
+    }];
+
+    const { ids } = await inquirer.prompt(question);
+    return ids;
+
+}
+
+const inquirerDeleteList = async(tasks = []) => {
+
+    const choices = tasks.map((task, i) => {
+
+        const index = `${i+1}.`.green;
 
         return {
             value: task.id,
@@ -125,26 +145,41 @@ const inquirerDeleteList = async (tasks = []) => {
         }
     })
 
-    const menu = [
-        {
-            type: 'list',
-            name: 'id',
-            message: 'Delete',
-            choices
-        }
-    ];
-    
-    const { id } = await inquirer.prompt(menu);
+    choices.unshift({
+        value: '0',
+        name: `${'0.'.green} Cancel`
+    })
+
+    const question = [{
+        type: 'list',
+        name: 'id',
+        message: 'Delete',
+        choices
+    }];
+
+    const { id } = await inquirer.prompt(question);
     return id;
 
-    
+}
 
+const inquirerDeleteConfirm = async(message) => {
+    const question = [{
 
+        type: 'confirm',
+        name: 'ok',
+        message
+
+    }];
+
+    const { ok } = await inquirer.prompt(question);
+    return ok;
 }
 
 module.exports = {
     inquirerMenu,
     inquirerPause,
     inquirerReadInput,
-    inquirerDeleteList
+    inquirerDeleteList,
+    inquirerDeleteConfirm,
+    inquirerCheckToDo
 }
